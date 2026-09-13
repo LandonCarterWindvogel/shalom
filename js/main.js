@@ -1,8 +1,3 @@
-/**
- * Entry point. Wires up feature modules and the few bits of page furniture
- * that do not justify a file of their own.
- */
-
 import { initNavigation, initHeaderScroll } from './navigation.js';
 import { initProducts } from './products.js';
 import { initFilters } from './filters.js';
@@ -18,7 +13,6 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 /* --------------------------------------------------------------- reveal */
 
 let revealObserver = null;
-
 const REVEAL_SELECTOR = '[data-reveal], [data-mask-reveal]';
 
 function revealAll() {
@@ -60,6 +54,24 @@ function initYear() {
   if (node) node.textContent = String(new Date().getFullYear());
 }
 
+function initFooterCredit() {
+  const legal = document.querySelector('.footer__legal');
+  if (!legal || legal.querySelector('.footer__credit')) return;
+
+  const credit = document.createElement('p');
+  credit.className = 'footer__credit';
+
+  const label = document.createTextNode('Built by ');
+  const link = document.createElement('a');
+  link.href = 'https://github.com/LandonCarterWindvogel';
+  link.textContent = 'Landon Carter Windvogel';
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+
+  credit.append(label, link);
+  legal.appendChild(credit);
+}
+
 function init() {
   initNavigation();
   initHeaderScroll();
@@ -72,6 +84,7 @@ function init() {
   initCartUI();
   initAssistantLauncher();
   initYear();
+  initFooterCredit();
   observeReveals();
 
   document.addEventListener('catalogue:updated', observeReveals);
