@@ -1,0 +1,18 @@
+# Shalom Designs — Netlify redirects
+# Comments are permitted in _redirects. They are NOT permitted in _headers.
+
+# Clean URLs (also handled by Netlify pretty URLs; declared explicitly so the
+# site behaves identically if pretty URLs are ever disabled).
+/school-uniforms    /school-uniforms.html    200
+/services           /services.html           200
+/about              /about.html              200
+/contact            /contact.html            200
+/shop               /shop.html               200
+
+# Legacy / convenience aliases
+/uniforms           /school-uniforms.html    301
+/prices             /shop.html               301
+/quote              /contact.html            301
+
+# SPA-style fallback is deliberately NOT used — this is a static site and a
+# catch-all would none real 404s.
