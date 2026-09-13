@@ -22,24 +22,26 @@ ROUTES = {
     "/shop": "shop.html",
 }
 
+QUOTES = r'''["'`]'''
+
 
 def rewrite(text: str) -> str:
     """Rewrite site-local URLs while leaving external URLs untouched."""
     for route, target in ROUTES.items():
         if route == "/":
-            text = re.sub(r'(["\'])/(["\'])', r'\1index.html\2', text)
+            text = re.sub(rf'({QUOTES})/({QUOTES})', r'\1index.html\2', text)
             continue
 
         # Handle quoted route references in HTML and JavaScript, preserving
         # query strings and fragments such as /contact?item=foo#enquiry.
-        pattern = rf'(["\']){re.escape(route)}(?=[?#"\'])'
+        pattern = rf'({QUOTES}){re.escape(route)}(?=[?#"\'`])'
         text = re.sub(pattern, rf'\1{target}', text)
 
     # Asset paths are identical on every root-level HTML page and in JS data
     # modules. Convert only quoted local paths.
     for directory in ("css", "js", "images", "data"):
         text = re.sub(
-            rf'(["\'])/{directory}/',
+            rf'({QUOTES})/{directory}/',
             rf'\1{directory}/',
             text,
         )
