@@ -25,20 +25,20 @@ This repository is intentionally framework-free. It uses semantic HTML5, modern 
 │   └── workflows/
 │       └── deploy-pages.yml     # GitHub Pages CI/CD
 ├── css/
-│   ├── base.css                 # reset, tokens, typography, utilities
-│   ├── layout.css               # page structure and responsive layout
-│   ├── components.css            # reusable UI components
-│   └── pages.css                # page-specific presentation
+│   ├── base.css                # reset, tokens, typography, utilities
+│   ├── layout.css              # page structure and responsive layout
+│   ├── components.css          # reusable UI components
+│   └── pages.css               # page-specific presentation
 ├── data/
-│   ├── images.js                # product image mapping
-│   └── pricing.js                # catalogue and pricing source of truth
-├── images/                      # optimised site media
+│   ├── images.js               # product image mapping
+│   └── pricing.js              # catalogue and pricing source of truth
+├── images/                     # site media
 ├── js/
-│   ├── main.js                  # application entry point
-│   ├── pricing.js               # pricing domain service
-│   └── ...                      # focused feature modules
+│   ├── main.js                 # application entry point
+│   ├── pricing.js              # pricing domain service
+│   └── ...                     # focused feature modules
 ├── scripts/
-│   └── build-pages.py           # GitHub Pages project-path build step
+│   └── build-pages.py          # GitHub Pages project-path build step
 ├── about.html
 ├── contact.html
 ├── index.html
@@ -46,8 +46,8 @@ This repository is intentionally framework-free. It uses semantic HTML5, modern 
 ├── services.html
 ├── shop.html
 ├── 404.html
-├── _headers                     # Netlify security headers
-├── _redirects                   # Netlify clean URLs
+├── _headers                   # Netlify security headers
+├── _redirects                 # Netlify clean URLs
 ├── robots.txt
 └── sitemap.xml
 ```
@@ -56,7 +56,7 @@ This repository is intentionally framework-free. It uses semantic HTML5, modern 
 
 No build toolchain is required for normal development.
 
-Open the project with a local static server so ES modules behave exactly as they do in production. For example, in VS Code use Live Server, or run any equivalent static HTTP server from the repository root.
+Open the project with a local static server so ES modules behave exactly as they do in production. In VS Code, Live Server works well; any equivalent static HTTP server from the repository root is fine.
 
 The production site can continue using Netlify. GitHub Pages is provided as an automatic public preview and deploys from `main` through GitHub Actions.
 
@@ -69,8 +69,6 @@ The workflow creates a deployment copy of the static site, rewrites root-relativ
 Live preview:
 
 **https://landoncarterwindvogel.github.io/shalom/**
-
-GitHub Pages supports custom workflows through Actions; the official workflow pattern uses `configure-pages`, `upload-pages-artifact` and `deploy-pages`. citeturn260825search1turn260825search2
 
 ## Updating catalogue data
 
