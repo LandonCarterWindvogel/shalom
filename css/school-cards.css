@@ -28,8 +28,7 @@
   transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
 
-/* The source HTML still contains media <span>/<img> elements. The image is
-   hidden here because the card itself is the visual background layer. */
+/* The card itself owns the school image as its background layer. */
 .school-card:nth-child(1) {
   background-image: url("../images/bahia.png");
 }
@@ -38,34 +37,29 @@
   background-image: url("../images/formosa.jpg");
 }
 
-.school-card__media {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  display: none;
-}
-
+.school-card__media,
 .school-card__media img {
   display: none;
 }
 
+/* The overlay stays light over the image at the top and becomes substantially
+   darker behind the content at the bottom for reliable text contrast. */
 .school-card__scrim {
   position: absolute;
   inset: 0;
   z-index: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.08) 30%,
-    rgba(0, 0, 0, 0.55) 62%,
-    rgba(0, 0, 0, 0.9) 100%
+    rgba(4, 18, 43, 0) 0%,
+    rgba(4, 18, 43, 0.04) 22%,
+    rgba(4, 18, 43, 0.18) 42%,
+    rgba(4, 18, 43, 0.58) 62%,
+    rgba(4, 18, 43, 0.88) 78%,
+    rgba(4, 18, 43, 0.98) 100%
   );
   pointer-events: none;
 }
 
-/* Every text element is layered directly over the image. Fixed bottom
-   offsets keep the current markup visually stacked without requiring an
-   extra wrapper element. */
 .school-card__eyebrow,
 .school-card__name,
 .school-card__rule,
@@ -117,7 +111,7 @@
   font-size: var(--step--1);
   font-weight: 500;
   line-height: var(--leading-normal);
-  opacity: 0.9;
+  opacity: 0.96;
 }
 
 .school-card__cta {
@@ -168,22 +162,6 @@
   .school-card {
     height: 400px;
     min-height: 400px;
-  }
-
-  .school-card__eyebrow {
-    bottom: 220px;
-  }
-
-  .school-card__name {
-    bottom: 146px;
-  }
-
-  .school-card__rule {
-    bottom: 126px;
-  }
-
-  .school-card__meta {
-    bottom: 64px;
   }
 }
 
