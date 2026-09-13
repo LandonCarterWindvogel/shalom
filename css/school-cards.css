@@ -28,18 +28,31 @@
   transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
 
-.school-card--bahia {
+/* The source HTML still contains media <span>/<img> elements. The image is
+   hidden here because the card itself is the visual background layer. */
+.school-card:nth-child(1) {
   background-image: url("../images/bahia.png");
 }
 
-.school-card--formosa {
+.school-card:nth-child(2) {
   background-image: url("../images/formosa.jpg");
 }
 
-.school-card__overlay {
+.school-card__media {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: -2;
+  display: none;
+}
+
+.school-card__media img {
+  display: none;
+}
+
+.school-card__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0) 0%,
@@ -50,26 +63,24 @@
   pointer-events: none;
 }
 
-.school-card__content {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  z-index: 2;
-  padding: clamp(1.25rem, 3vw, 2rem);
-  color: var(--white);
-}
-
+/* Every text element is layered directly over the image. Fixed bottom
+   offsets keep the current markup visually stacked without requiring an
+   extra wrapper element. */
 .school-card__eyebrow,
 .school-card__name,
+.school-card__rule,
 .school-card__meta,
 .school-card__cta {
-  position: static;
+  position: absolute;
+  left: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 2rem);
+  z-index: 1;
   color: var(--white);
 }
 
 .school-card__eyebrow {
-  display: block;
-  margin: 0 0 var(--space-xs);
+  bottom: 216px;
+  margin: 0;
   font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 700;
@@ -79,7 +90,7 @@
 }
 
 .school-card__name {
-  display: block;
+  bottom: 144px;
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2rem, 3.5vw, 3.2rem);
@@ -90,17 +101,17 @@
 }
 
 .school-card__rule {
-  display: block;
+  bottom: 126px;
   width: 2.5rem;
   height: 1px;
-  margin: var(--space-m) 0 var(--space-s);
+  margin: 0;
   background: var(--white);
   transition: width var(--dur) var(--ease-out);
 }
 
 .school-card__meta {
-  display: block;
-  max-width: 48ch;
+  bottom: 64px;
+  max-width: calc(100% - 2 * clamp(1.25rem, 3vw, 2rem));
   margin: 0;
   font-family: var(--font-sans);
   font-size: var(--step--1);
@@ -113,7 +124,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6ch;
-  margin-top: var(--space-m);
+  right: auto;
+  bottom: 25px;
+  margin: 0;
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
@@ -150,6 +163,27 @@
 @media (max-width: 47.99rem) {
   .school-cards {
     grid-template-columns: 1fr;
+  }
+
+  .school-card {
+    height: 400px;
+    min-height: 400px;
+  }
+
+  .school-card__eyebrow {
+    bottom: 220px;
+  }
+
+  .school-card__name {
+    bottom: 146px;
+  }
+
+  .school-card__rule {
+    bottom: 126px;
+  }
+
+  .school-card__meta {
+    bottom: 64px;
   }
 }
 
