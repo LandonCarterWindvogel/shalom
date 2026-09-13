@@ -47,7 +47,7 @@ function observeReveals() {
     });
 }
 
-/* ------------------------------------------------------- page furniture */
+/* --------------------------------------------------------- page goed */
 
 function initYear() {
   const node = document.querySelector('[data-year]');
