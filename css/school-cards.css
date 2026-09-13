@@ -28,7 +28,6 @@
   transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
 }
 
-/* The card itself owns the school image as its background layer. */
 .school-card:nth-child(1) {
   background-image: url("../images/bahia.png");
 }
@@ -42,8 +41,8 @@
   display: none;
 }
 
-/* The overlay stays light over the image at the top and becomes substantially
-   darker behind the content at the bottom for reliable text contrast. */
+/* Full-image scrim: keep the photograph visible at the top and reserve the
+   darkest portion for the typography at the bottom. */
 .school-card__scrim {
   position: absolute;
   inset: 0;
@@ -51,10 +50,39 @@
   background: linear-gradient(
     to bottom,
     rgba(4, 18, 43, 0) 0%,
-    rgba(4, 18, 43, 0.04) 22%,
-    rgba(4, 18, 43, 0.18) 42%,
-    rgba(4, 18, 43, 0.58) 62%,
-    rgba(4, 18, 43, 0.88) 78%,
+    rgba(4, 18, 43, 0.03) 24%,
+    rgba(4, 18, 43, 0.12) 42%,
+    rgba(4, 18, 43, 0.42) 58%,
+    rgba(4, 18, 43, 0.78) 74%,
+    rgba(4, 18, 43, 0.96) 100%
+  );
+  pointer-events: none;
+}
+
+/* One bottom-anchored content block prevents the typography from overlapping
+   when descriptions wrap or the viewport changes size. */
+.school-card__content {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 2;
+  isolation: isolate;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  color: var(--white);
+}
+
+/* Extra local contrast directly behind the text. The full-card scrim still
+   keeps the photograph visible above this area. */
+.school-card__content::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -4.5rem 0 -1rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 27, 63, 0) 0%,
+    rgba(6, 27, 63, 0.58) 28%,
+    rgba(6, 27, 63, 0.92) 68%,
     rgba(4, 18, 43, 0.98) 100%
   );
   pointer-events: none;
@@ -65,26 +93,26 @@
 .school-card__rule,
 .school-card__meta,
 .school-card__cta {
-  position: absolute;
-  left: clamp(1.25rem, 3vw, 2rem);
-  right: clamp(1.25rem, 3vw, 2rem);
-  z-index: 1;
+  position: static;
+  left: auto;
+  right: auto;
   color: var(--white);
 }
 
 .school-card__eyebrow {
-  bottom: 216px;
-  margin: 0;
+  display: block;
+  margin: 0 0 var(--space-xs);
   font-family: var(--font-sans);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: var(--tracking-widest);
   line-height: 1.2;
   text-transform: uppercase;
+  opacity: 0.96;
 }
 
 .school-card__name {
-  bottom: 144px;
+  display: block;
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2rem, 3.5vw, 3.2rem);
@@ -95,22 +123,22 @@
 }
 
 .school-card__rule {
-  bottom: 126px;
+  display: block;
   width: 2.5rem;
   height: 1px;
-  margin: 0;
+  margin: var(--space-m) 0 var(--space-s);
   background: var(--white);
   transition: width var(--dur) var(--ease-out);
 }
 
 .school-card__meta {
-  bottom: 64px;
-  max-width: calc(100% - 2 * clamp(1.25rem, 3vw, 2rem));
+  display: block;
+  max-width: 48ch;
   margin: 0;
   font-family: var(--font-sans);
   font-size: var(--step--1);
   font-weight: 500;
-  line-height: var(--leading-normal);
+  line-height: 1.5;
   opacity: 0.96;
 }
 
@@ -118,9 +146,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6ch;
-  right: auto;
-  bottom: 25px;
-  margin: 0;
+  margin-top: var(--space-m);
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 700;
