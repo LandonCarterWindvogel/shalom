@@ -22,25 +22,30 @@ export function initAssistantLauncher() {
   note.id = 'assistant-launcher-note';
   note.setAttribute('role', 'status');
   note.setAttribute('aria-live', 'polite');
-  note.textContent = `${assistant.name} isn't connected yet — send us an enquiry in the meantime.`;
+  note.textContent = `${assistant.name} is here — questions and enquiries can be sent from the contact page.`;
   note.hidden = true;
 
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'assistant-launcher';
   button.setAttribute('data-assistant-launcher', '');
-  button.setAttribute('aria-label', `Chat with ${assistant.name} (coming soon)`);
+  button.setAttribute('aria-label', `Open ${assistant.name}`);
   button.setAttribute('aria-describedby', note.id);
   button.setAttribute('aria-expanded', 'false');
 
   const img = document.createElement('img');
   img.src = assistant.image;
   img.alt = '';
-  img.width = 40;
-  img.height = 40;
+  img.width = 64;
+  img.height = 64;
   img.loading = 'lazy';
   img.decoding = 'async';
   button.append(img);
+
+  const status = document.createElement('span');
+  status.className = 'assistant-launcher__status';
+  status.setAttribute('aria-hidden', 'true');
+  button.append(status);
 
   button.addEventListener('click', () => {
     note.hidden = !note.hidden;
