@@ -1,15 +1,4 @@
-/**
- * Floating assistant launcher — the visual home for "Chatty".
- *
- * There is no backend for this yet, so the launcher is honest about that:
- * clicking it reveals a short note instead of pretending to start a chat.
- * When the backend exists, replace the click handler below with whatever
- * opens the real chat surface — the button, image and positioning can all
- * stay as they are.
- *
- * Rendered once, injected at the end of <body> so it floats above every
- * page without needing markup changes on each template.
- */
+/* --------------------------------------------------------------- Chatty */
 
 import { assistant } from '../data/images.js';
 
