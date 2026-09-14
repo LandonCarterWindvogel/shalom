@@ -1,4 +1,4 @@
-# Contributing
+# Contributing (Rushane (Shanie) Johnson)
 
 Thank you for helping keep Shalom Designs maintainable.
 
