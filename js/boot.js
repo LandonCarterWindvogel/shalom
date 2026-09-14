@@ -9,8 +9,10 @@
   } catch (err) {
   }
 
-  var schoolStyles = document.createElement('link');
-  schoolStyles.rel = 'stylesheet';
-  schoolStyles.href = '/css/school-cards.css';
-  document.head.appendChild(schoolStyles);
+  ['/css/school-cards.css', '/css/navigation-mobile.css'].forEach(function (href) {
+    var styles = document.createElement('link');
+    styles.rel = 'stylesheet';
+    styles.href = href;
+    document.head.appendChild(styles);
+  });
 })();
