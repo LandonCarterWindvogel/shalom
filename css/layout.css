@@ -1,7 +1,7 @@
-/* ==========================================================================
+/* =====================================================================
    Shalom Designs — layout.css
    Container, header, navigation, sections, footer.
-   ========================================================================== */
+   ===================================================================== */
 
 .container {
   width: 100%;
@@ -61,7 +61,6 @@
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  /* Hairline gold border makes the mark read as a seal, not a chip. */
   box-shadow: inset 0 0 0 1px var(--gold);
 }
 
@@ -102,11 +101,12 @@
   z-index: 90;
   display: flex;
   flex-direction: column;
-  gap: var(--space-l);
-  padding: var(--space-l) var(--gutter) var(--space-2xl);
+  gap: var(--space-m);
+  padding: var(--space-m) var(--gutter) var(--space-l);
   background: var(--blue-deep);
   color: var(--ivory);
   overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-0.5rem);
@@ -135,10 +135,11 @@
   display: flex;
   align-items: baseline;
   gap: var(--space-s);
-  padding: var(--space-m) 0;
+  padding: var(--space-s) 0;
   font-family: var(--font-display);
-  font-size: var(--step-3);
+  font-size: var(--step-2);
   font-weight: 500;
+  line-height: 1.1;
   text-decoration: none;
   border-bottom: 1px solid var(--border-on-dark);
   color: var(--ivory);
@@ -147,7 +148,7 @@
 .primary-nav__list a::before {
   content: counter(nav, decimal-leading-zero);
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: var(--tracking-widest);
   color: var(--gold);
