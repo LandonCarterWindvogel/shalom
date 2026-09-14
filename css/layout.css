@@ -18,12 +18,14 @@
   border-bottom: 1px solid transparent;
   transition:
     border-color var(--dur) var(--ease),
-    background-color var(--dur) var(--ease);
+    background-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
 }
 
 .site-header.is-scrolled {
   border-bottom-color: var(--border);
   background: color-mix(in srgb, var(--ivory) 97%, transparent);
+  box-shadow: 0 10px 30px rgb(6 27 63 / 7%);
 }
 
 .header__inner {
@@ -98,6 +100,17 @@
   white-space: nowrap;
 }
 
+@media (max-width: 59.999rem) {
+  .header__inner {
+    gap: clamp(var(--space-2xs), 3vw, var(--space-m));
+  }
+
+  .brand__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 /* -------------------------------------------------------- nav (mobile) */
 
 .nav-toggle {
@@ -105,10 +118,10 @@
   align-items: center;
   flex: 0 0 auto;
   gap: var(--space-2xs);
-  padding: var(--space-2xs) var(--space-xs);
+  padding: var(--space-2xs) clamp(0.6rem, 2.5vw, var(--space-xs));
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-pill);
-  font-size: 0.72rem;
+  font-size: clamp(0.65rem, 2.6vw, 0.72rem);
   font-weight: 600;
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
@@ -248,7 +261,10 @@
 
 /* ------------------------------------------------------------- sections */
 
-.section { padding-block: clamp(var(--space-2xl), 9vw, var(--space-4xl)); }
+.section {
+  position: relative;
+  padding-block: clamp(var(--space-2xl), 9vw, var(--space-4xl));
+}
 .section--tight { padding-block: clamp(var(--space-xl), 6vw, var(--space-2xl)); }
 .section--alt { background: var(--surface-2); }
 
@@ -263,7 +279,7 @@
 .section--dark h2,
 .section--dark h3 { color: var(--ivory); }
 
-.section__head { max-width: 62ch; margin-bottom: var(--space-xl); }
+.section__head { max-width: 62ch; margin-bottom: clamp(var(--space-l), 4vw, var(--space-xl)); }
 .section__head h2 + .section__lead { margin-top: var(--space-m); }
 
 /* ---------------------------------------------------------- cta band */

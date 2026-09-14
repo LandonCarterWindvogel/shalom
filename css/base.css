@@ -6,6 +6,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
 }
@@ -136,11 +137,19 @@ table { border-collapse: collapse; width: 100%; }
 
 body {
   background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 12% 8%, rgb(201 162 74 / 7%), transparent 24rem),
+    radial-gradient(circle at 88% 42%, rgb(8 43 115 / 4%), transparent 30rem);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--step-0);
   line-height: var(--leading-normal);
   font-synthesis-weight: none;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--blue-deep);
 }
 
 h1, h2, h3, h4 {
@@ -231,6 +240,7 @@ a {
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(0.75rem);
+  will-change: opacity, transform;
   transition:
     opacity var(--dur-slow) var(--ease-out),
     transform var(--dur-slow) var(--ease-out);
