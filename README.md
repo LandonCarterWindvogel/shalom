@@ -85,6 +85,6 @@ The repository supports two deployment targets:
 
 Do not put API keys, passwords, private customer information or other secrets into this repository. Public static files are visible to anyone with access to the repository.
 
-## Contributing
+## Contributing (Rushane(Shanie)Johnson)
 
 Keep changes small and intentional. Prefer one concern per commit, preserve semantic HTML and accessibility, avoid unnecessary dependencies, and update the source-of-truth data instead of duplicating catalogue values across templates.
