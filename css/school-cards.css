@@ -1,8 +1,3 @@
-/* ==========================================================================
-   Shalom Designs — school selector
-   Two-card editorial school chooser used on the home page.
-   ========================================================================== */
-
 .school-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -41,8 +36,6 @@
   display: none;
 }
 
-/* Full-image scrim: keep the photograph visible at the top and reserve the
-   darkest portion for the typography at the bottom. */
 .school-card__scrim {
   position: absolute;
   inset: 0;
@@ -59,8 +52,6 @@
   pointer-events: none;
 }
 
-/* One bottom-anchored content block prevents the typography from overlapping
-   when descriptions wrap or the viewport changes size. */
 .school-card__content {
   position: absolute;
   inset-inline: 0;
@@ -71,8 +62,6 @@
   color: var(--white);
 }
 
-/* Extra local contrast directly behind the text. The full-card scrim still
-   keeps the photograph visible above this area. */
 .school-card__content::before {
   content: "";
   position: absolute;

@@ -1,11 +1,3 @@
-/* ==========================================================================
-   Shalom Designs — base.css
-   Reset, design tokens, typography, global element defaults.
-
-   Palette: Royal Blue + Gold (verified brand direction).
-   Typography: Cormorant Garamond (display) + Manrope (interface).
-   ========================================================================== */
-
 /* ---------------------------------------------------------------- reset */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -38,7 +30,6 @@ table { border-collapse: collapse; width: 100%; }
 /* --------------------------------------------------------------- tokens */
 
 :root {
-  /* ---- brand palette (verified: royal blue + gold) ---- */
   --blue: #082b73;              /* primary royal blue */
   --blue-rich: #0b3d91;         /* rich royal blue */
   --blue-deep: #061b3f;         /* deep midnight blue */
@@ -86,8 +77,6 @@ table { border-collapse: collapse; width: 100%; }
   --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
 
-  /* Display scale — Cormorant reads smaller than a heavy serif, so the scale
-     is pushed larger than a Fraunces-equivalent scale would be. */
   --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
   --step-0: clamp(1rem, 0.97rem + 0.16vw, 1.06rem);
   --step-1: clamp(1.16rem, 1.11rem + 0.26vw, 1.28rem);
@@ -169,7 +158,6 @@ h4 { font-size: var(--step-1); }
 
 p { text-wrap: pretty; }
 
-/* Uppercase micro-label used above headings and on buttons. */
 .eyebrow {
   display: block;
   font-family: var(--font-sans);
@@ -191,7 +179,6 @@ p { text-wrap: pretty; }
   line-height: var(--leading-normal);
 }
 
-/* A short gold hairline — one of the few places gold appears. */
 .gold-rule {
   display: block;
   width: 2.5rem;
@@ -241,7 +228,6 @@ a {
 
 /* --------------------------------------------------------------- motion */
 
-/* Gentle reveals — only opacity + a small translate, never both large. */
 .js [data-reveal] {
   opacity: 0;
   transform: translateY(0.75rem);
@@ -256,7 +242,6 @@ a {
   transform: none;
 }
 
-/* Mask reveal — used on editorial images. Clip from the bottom. */
 .js [data-mask-reveal] {
   opacity: 1;
   transform: none;
@@ -307,22 +292,14 @@ a {
   color: var(--muted);
 }
 
-/* ---------------------------------------------------- CSP-safe helpers */
-/* Inline style="" attributes are blocked by our strict CSP.
-   Recurring spacing patterns are expressed as classes or sibling
-   selectors instead — never as inline styles. */
-
-/* Gold rule directly followed by an eyebrow label — a section pattern. */
 .gold-rule + .eyebrow {
   margin-top: var(--space-s);
 }
 
-/* A callout that needs breathing room above it. */
 .callout--spaced {
   margin-top: var(--space-l);
 }
 
-/* An editorial image that needs a gap above it (usually inside a stack). */
 .editorial-image--spaced {
   margin-top: var(--space-m);
 }

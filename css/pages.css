@@ -1,8 +1,3 @@
-/* ==========================================================================
-   Shalom Designs — pages.css
-   Hero, school panels, contact layout, thank-you, prose.
-   ========================================================================== */
-
 /* --------------------------------------------------------- editorial hero */
 
 .hero--editorial {
@@ -28,7 +23,6 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* A very slow drift gives the hero life without parallax jank. */
   animation: hero-drift 30s ease-in-out infinite alternate;
 }
 
@@ -268,8 +262,6 @@
 .work-gallery {
   display: grid;
   gap: var(--space-l);
-  /* Mixed orientations are intentional. Top-align so cards of different
-     heights read as a considered pair, not as an accidental mismatch. */
   align-items: start;
 }
 
@@ -280,8 +272,6 @@
   }
 }
 
-/* Portrait modifier for tall subjects — a standing figure, a robe, a
-   full-length garment. Wide modifier stays as it was for horizontal work. */
 .editorial-image--portrait {
   aspect-ratio: 3 / 4;
 }
@@ -293,8 +283,6 @@
   object-position: center top;
 }
 
-/* A very tall subject (a full-length figure against a wall) benefits from
-   an even narrower frame, so the figure fills it rather than floating. */
 .editorial-image--portrait-tall {
   aspect-ratio: 2 / 3;
 }
