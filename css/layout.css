@@ -66,6 +66,31 @@
   object-fit: contain;
 }
 
+/* Legacy header markup used on the other pages: neutralise the old logo block. */
+.brand > span[aria-hidden="true"]:not(.brand__name) {
+  display: block !important;
+  flex: 0 0 2.5rem !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  min-height: 2.5rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.brand > span[aria-hidden="true"]:not(.brand__name) img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: contain !important;
+}
+
 .brand__name {
   min-width: 0;
   font-size: var(--step-1);
