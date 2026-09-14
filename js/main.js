@@ -58,17 +58,24 @@ function initFooterCredit() {
   const legal = document.querySelector('.footer__legal');
   if (!legal || legal.querySelector('.footer__credit')) return;
 
+  legal.style.display = 'flex';
+  legal.style.flexDirection = 'column';
+  legal.style.alignItems = 'center';
+  legal.style.justifyContent = 'center';
+  legal.style.textAlign = 'center';
+  legal.style.gap = '0.3rem';
+
   const credit = document.createElement('p');
   credit.className = 'footer__credit';
+  credit.style.margin = '0';
 
-  const label = document.createTextNode('Built by ');
   const link = document.createElement('a');
   link.href = 'https://github.com/LandonCarterWindvogel';
-  link.textContent = 'Landon Carter Windvogel';
+  link.textContent = 'Built by Landon Carter Windvogel';
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
 
-  credit.append(label, link);
+  credit.appendChild(link);
   legal.appendChild(credit);
 }
 
