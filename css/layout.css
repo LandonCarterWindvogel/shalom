@@ -47,43 +47,23 @@
   letter-spacing: 0.01em;
 }
 
-/* The logo introduced in the latest refactor was 5rem wide. That left the
-   mobile header with no room for the menu control and order action. Keep the
-   mark at the established 2.5rem component size so the header can shrink
-   naturally instead of creating page-wide horizontal overflow. */
-.brand > [aria-hidden="true"] {
-  display: grid !important;
-  place-items: center;
-  flex: 0 0 2.5rem;
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-  overflow: hidden !important;
-  background: var(--blue-deep);
-  border-radius: var(--radius-s);
-  box-shadow: inset 0 0 0 1px var(--gold);
-}
-
-.brand > [aria-hidden="true"] img {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none;
-  object-fit: contain;
-}
-
-.brand__mark {
-  display: grid;
-  place-items: center;
+.brand__logo {
+  display: block;
+  flex: 0 0 auto;
   width: 2.5rem;
   height: 2.5rem;
-  background: var(--blue-deep);
-  color: var(--gold-light);
-  border-radius: var(--radius-s);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  box-shadow: inset 0 0 0 1px var(--gold);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.brand__logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
 }
 
 .brand__name {
@@ -185,9 +165,6 @@
 
 .primary-nav__cta { align-self: start; }
 
-/* The order action is already available as the primary CTA inside the mobile
-   navigation. Keeping the header badge visible as well makes narrow headers
-   wider than the viewport, especially alongside the brand and menu button. */
 @media (max-width: 59.999rem) {
   .order-badge { display: none; }
 }
