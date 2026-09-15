@@ -216,11 +216,16 @@
 
 /* ------------------------------------------------------- school selector */
 
+body[data-page="school-uniforms"] {
+  overflow-x: clip;
+}
+
 .school-panel {
   padding: var(--space-l);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-s);
+  min-width: 0;
 }
 
 .school-panel__head {
@@ -244,6 +249,23 @@
   color: var(--muted);
   font-size: var(--step--1);
   max-width: 46ch;
+  min-width: 0;
+}
+
+body[data-page="school-uniforms"] .product-grid,
+body[data-page="school-uniforms"] [data-school-products],
+body[data-page="school-uniforms"] [data-price-list] {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 30rem) {
+  body[data-page="school-uniforms"] .section--dark .btn--light {
+    width: 100%;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 /* -------------------------------------------------------------- contact */
