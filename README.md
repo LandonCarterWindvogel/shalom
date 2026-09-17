@@ -1,44 +1,104 @@
 # Shalom Designs
 
-> A production-ready static website for Shalom Designs — school uniforms, embroidery, custom clothing and related work in the Garden Route, South Africa.
+This is the website I am building for **Shalom Designs** — a South African business working with school uniforms, embroidery, custom clothing and related services in the Garden Route.
+
+I am treating this project as both a real client-facing build and a serious portfolio piece. The goal is not just to make the site look expensive. It needs to be easy to use, easy to maintain and reliable when the catalogue grows.
 
 [![Live preview](https://img.shields.io/badge/Live%20preview-GitHub%20Pages-082b73?style=for-the-badge)](https://landoncarterwindvogel.github.io/shalom/)
 [![Production](https://img.shields.io/badge/Production-shalomdesigns.co.za-c9a24a?style=for-the-badge)](https://shalomdesigns.co.za/)
 
-## Project standards
+## What I am building
 
-This repository is intentionally framework-free. It uses semantic HTML5, modern CSS, native ES modules and small focused JavaScript modules.
+The site brings together:
 
-- **No frontend framework:** vanilla HTML, CSS and JavaScript.
-- **Architecture:** page markup → feature modules → `data/` → pricing service.
-- **Styling:** layered CSS (`base`, `layout`, `components`, `pages`) with shared design tokens.
-- **Accessibility:** skip navigation, semantic landmarks, keyboard-visible focus, meaningful image alternatives and reduced-motion support.
-- **Security:** DOM updates prefer `textContent` / DOM APIs over HTML injection; production security headers are maintained in `_headers` for Netlify.
-- **SEO:** semantic document structure, page-specific metadata, canonical URLs, Open Graph metadata, `robots.txt` and `sitemap.xml`.
-- **Performance:** responsive images, lazy loading for below-the-fold media, `fetchpriority="high"` for the hero and minimal JavaScript dependencies.
+- school uniforms
+- catalogue products
+- embroidery and custom clothing services
+- pricing and size information
+- business information and contact options
+- a structured shopping experience
+
+One of my biggest priorities is keeping the catalogue trustworthy. If a product exists in the source data, I do not want a redesign, chatbot or clever UI decision quietly making it disappear.
+
+## How I built it
+
+I deliberately kept the project framework-free:
+
+- **HTML5** for semantic page structure
+- **CSS** split into base, layout, component and page layers
+- **Native ES modules** for focused JavaScript functionality
+- **Data files** for catalogue and pricing information
+- **Small services/modules** instead of one enormous JavaScript file
+
+The basic flow is:
+
+```text
+Page markup → feature modules → data → pricing service
+```
+
+That separation matters because changing a school uniform price should not require hunting through six different HTML pages hoping I remembered every occurrence.
+
+## Accessibility
+
+I want the site to work for people, not just screenshots.
+
+The implementation includes:
+
+- skip navigation
+- semantic landmarks
+- visible keyboard focus
+- meaningful image alternatives
+- reduced-motion support
+- accessible navigation and controls
+- responsive layouts for small and large screens
+
+## Security
+
+I keep client-side DOM updates on the safer side of the fence by preferring `textContent` and DOM APIs over unnecessary HTML injection.
+
+Netlify security headers are maintained in `_headers` for the production deployment.
+
+I do not put API keys, passwords, private customer information or other secrets into this repository. If something needs to stay secret, it does not belong in a public static file.
+
+## SEO and performance
+
+I have built the technical foundations into the site rather than leaving SEO as a final-minute checkbox:
+
+- page-specific titles and descriptions
+- canonical URLs
+- Open Graph metadata
+- `robots.txt`
+- `sitemap.xml`
+- semantic HTML
+- structured content
+- responsive images
+- lazy loading for below-the-fold media
+- high priority loading for the hero image
+- minimal JavaScript dependencies
+
+The objective is straightforward: give search engines useful information and give users a fast website.
 
 ## Repository structure
 
 ```text
 .
-├── .github/
-│   └── workflows/
-│       └── deploy-pages.yml     # GitHub Pages CI/CD
+├── .github/workflows/
+│   └── deploy-pages.yml
 ├── css/
-│   ├── base.css                # reset, tokens, typography, utilities
-│   ├── layout.css              # page structure and responsive layout
-│   ├── components.css          # reusable UI components
-│   └── pages.css               # page-specific presentation
+│   ├── base.css
+│   ├── layout.css
+│   ├── components.css
+│   └── pages.css
 ├── data/
-│   ├── images.js               # product image mapping
-│   └── pricing.js              # catalogue and pricing source of truth
-├── images/                     # site media
+│   ├── images.js
+│   └── pricing.js
+├── images/
 ├── js/
-│   ├── main.js                 # application entry point
-│   ├── pricing.js              # pricing domain service
-│   └── ...                     # focused feature modules
+│   ├── main.js
+│   ├── pricing.js
+│   └── ...
 ├── scripts/
-│   └── build-pages.py          # GitHub Pages project-path build step
+│   └── build-pages.py
 ├── about.html
 ├── contact.html
 ├── index.html
@@ -46,45 +106,51 @@ This repository is intentionally framework-free. It uses semantic HTML5, modern 
 ├── services.html
 ├── shop.html
 ├── 404.html
-├── _headers                   # Netlify security headers
-├── _redirects                 # Netlify clean URLs
+├── _headers
+├── _redirects
 ├── robots.txt
 └── sitemap.xml
 ```
 
+## Catalogue data
+
+The source of truth for product and pricing information is `data/pricing.js`.
+
+Image mappings live in `data/images.js`.
+
+I keep this data separate from the page templates so the catalogue can change without turning every content update into a full website surgery session.
+
 ## Development
 
-No build toolchain is required for normal development.
+I do not need a large build toolchain just to work on the site.
 
-Open the project with a local static server so ES modules behave exactly as they do in production. In VS Code, Live Server works well; any equivalent static HTTP server from the repository root is fine.
+I use a local static HTTP server so native ES modules behave properly. VS Code Live Server works well, but any equivalent static server from the repository root is fine.
 
-The production site can continue using Netlify. GitHub Pages is provided as an automatic public preview and deploys from `main` through GitHub Actions.
+## Deployment
 
-## GitHub Pages
+I currently support two deployment targets:
 
-Every push to `main` runs `.github/workflows/deploy-pages.yml`.
+1. **Netlify** for the production site, including `_redirects` and `_headers`.
+2. **GitHub Pages** as an automatic public preview from `main`.
 
-The workflow creates a deployment copy of the static site, rewrites root-relative URLs and clean Netlify routes for the `/shalom/` project-site path, uploads the result as a Pages artifact, and deploys it with GitHub's Pages deployment actions.
+Every push to `main` runs `.github/workflows/deploy-pages.yml`, which creates the `/shalom/` project-site version and publishes it through GitHub Pages.
 
-Live preview:
+Preview:
 
-**https://landoncarterwindvogel.github.io/shalom/**
+https://landoncarterwindvogel.github.io/shalom/
 
-## Updating catalogue data
+Production:
 
-Product and pricing content belongs in `data/pricing.js`. Image mappings belong in `data/images.js`.
+https://shalomdesigns.co.za/
 
-Keeping catalogue data separate from presentation means a price change does not require editing multiple page templates.
+## A note to future me
 
-## Deployment model
+If I am about to duplicate a price in three HTML files, stop.
 
-The repository supports two deployment targets:
+If I am about to add a framework because one component feels annoying, stop.
 
-1. **Netlify / production** — retains the existing `_redirects` and `_headers` behaviour.
-2. **GitHub Pages / preview** — builds a deployment copy under the repository's project-site path and publishes it automatically from `main`.
+If I am about to "clean up" the catalogue by removing something that looks unnecessary, check the actual business data first.
 
-Do not put API keys, passwords, private customer information or other secrets into this repository. Public static files are visible to anyone with access to the repository.
+And if the school uniforms page suddenly starts scrolling sideways, I should probably investigate the CSS before declaring that the browser has personally offended me.
 
-## Contributing (Rushane(Shanie)Johnson)
-
-Keep changes small and intentional. Prefer one concern per commit, preserve semantic HTML and accessibility, avoid unnecessary dependencies, and update the source-of-truth data instead of duplicating catalogue values across templates.
+Keep the data accurate, keep the code modular, test the actual pages and make changes for a reason.
