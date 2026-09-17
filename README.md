@@ -1,6 +1,6 @@
 # Shalom Designs
 
-This is the website I am building for **Shalom Designs** — a South African business working with school uniforms, embroidery, custom clothing and related services in the Garden Route.
+This is the website I am building for **Shalom Designs** - a South African business working with school uniforms, embroidery, custom clothing and related services in the Garden Route.
 
 I am treating this project as both a real client-facing build and a serious portfolio piece. The goal is not just to make the site look expensive. It needs to be easy to use, easy to maintain and reliable when the catalogue grows.
 
