@@ -136,9 +136,7 @@ function itemCard(item, school) {
     addBtn.dataset.itemName = item.name;
     addBtn.dataset.itemKind = item.kind || 'product';
     addBtn.dataset.sizes = sizes.join(',');
-    addBtn.dataset.priceMap = JSON.stringify(
-      Number.isFinite(item.flatPrice) ? { _flat: item.flatPrice } : (item.pricing || {})
-    );
+    addBtn.dataset.priceMap = JSON.stringify(item.pricing || {});
     actions.append(addBtn);
 
     const direct = el('a', 'product-card__direct', 'Or enquire directly');
