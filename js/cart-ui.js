@@ -63,7 +63,7 @@ function ensureDialog() {
       <h2 id="order-dialog-title" class="order-dialog__title">Add to order list</h2>
       <p class="order-dialog__school" data-dialog-school></p>
 
-      <div class="field" data-dialog-size-field>
+      <div class="field">
         <label class="field__label" for="order-size">Size</label>
         <select class="field__input" id="order-size" name="size" required
                 data-required-message="Please choose a size."></select>
@@ -125,15 +125,11 @@ function refreshDialogPrice(dialog) {
   const priceMap = dialog.dataset.priceMap
     ? JSON.parse(dialog.dataset.priceMap)
     : {};
+  const price = priceMap[select.value];
   const quantity = Math.max(1, Math.min(99, Number(qtyInput.value) || 1));
-  const price = Number.isFinite(priceMap._flat)
-    ? priceMap._flat
-    : priceMap[select.value];
 
-  if (!Number.isFinite(price) || (select.required && !select.value)) {
-    priceOut.textContent = select.required
-      ? 'Choose a size to see the price.'
-      : 'Fixed price item.';
+  if (!select.value || !Number.isFinite(price)) {
+    priceOut.textContent = 'Choose a size to see the price.';
     return;
   }
 
