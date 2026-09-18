@@ -63,7 +63,7 @@ function ensureDialog() {
       <h2 id="order-dialog-title" class="order-dialog__title">Add to order list</h2>
       <p class="order-dialog__school" data-dialog-school></p>
 
-      <div class="field">
+      <div class="field" data-dialog-size-field>
         <label class="field__label" for="order-size">Size</label>
         <select class="field__input" id="order-size" name="size" required
                 data-required-message="Please choose a size."></select>
