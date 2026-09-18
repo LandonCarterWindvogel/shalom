@@ -125,17 +125,21 @@ function refreshDialogPrice(dialog) {
   const priceMap = dialog.dataset.priceMap
     ? JSON.parse(dialog.dataset.priceMap)
     : {};
-  const price = priceMap[select.value];
   const quantity = Math.max(1, Math.min(99, Number(qtyInput.value) || 1));
+  const price = Number.isFinite(priceMap._flat)
+    ? priceMap._flat
+    : priceMap[select.value];
 
-  if (!select.value || !Number.isFinite(price)) {
-    priceOut.textContent = 'Choose a size to see the price.';
+  if (!Number.isFinite(price) || (select.required && !select.value)) {
+    priceOut.textContent = select.required
+      ? 'Choose a size to see the price.'
+      : 'Fixed price item.';
     return;
   }
 
   const unit = formatAmount(price);
   if (quantity > 1) {
-    priceOut.textContent = `${unit} each · ${formatAmount(resolvedPrice * quantity)} for ${quantity}`;
+    priceOut.textContent = `${unit} each · ${formatAmount(price * quantity)} for ${quantity}`;
   } else {
     priceOut.textContent = `${unit} each`;
   }
