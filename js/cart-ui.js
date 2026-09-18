@@ -135,7 +135,7 @@ function refreshDialogPrice(dialog) {
 
   const unit = formatAmount(price);
   if (quantity > 1) {
-    priceOut.textContent = `${unit} each · ${formatAmount(price * quantity)} for ${quantity}`;
+    priceOut.textContent = `${unit} each · ${formatAmount(resolvedPrice * quantity)} for ${quantity}`;
   } else {
     priceOut.textContent = `${unit} each`;
   }
