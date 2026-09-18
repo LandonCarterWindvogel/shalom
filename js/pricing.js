@@ -1,6 +1,7 @@
 /**
  * Pricing service — the only module allowed to read data/pricing.js.
- * All product cards, price lists and order dialogs use this service.
+ * Every other module asks this one for prices, so there is one read path
+ * and one formatting path for money on the entire site.
  */
 
 import {
@@ -29,162 +30,197 @@ export function formatSize(size) {
   return SIZE_LABEL[size] || size || '';
 }
 
+/** Sort an array of size keys into canonical order. */
 export function sortSizes(sizes) {
-  return [...sizes].sort((a, b) => {
-    const ai = SIZE_ORDER.indexOf(a);
-    const bi = SIZE_ORDER.indexOf(b);
-    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-  });
+  return [...sizes].sort(
+    (a, b) => SIZE_ORDER.indexOf(a) - SIZE_ORDER.indexOf(b)
+  );
 }
 
 /* -------------------------------------------------------- price lookups */
 
+/** The price of a product at a specific size, or null if unknown. */
 export function getPriceForSize(product, size) {
-  if (!product) return null;
-  if (Number.isFinite(product.flatPrice)) return product.flatPrice;
-  if (!product.pricing) return null;
+  if (!product || !product.pricing) return null;
   const value = product.pricing[size];
   return Number.isFinite(value) ? value : null;
 }
 
+/** True if the size is offered and priced for this product. */
 export function isSizeAvailable(product, size) {
-  if (!product) return false;
-  if (Number.isFinite(product.flatPrice)) return true;
-  if (!Array.isArray(product.availableSizes)) return false;
-  return product.availableSizes.includes(size) && getPriceForSize(product, size) !== null;
+  if (!product || !Array.isArray(product.availableSizes)) return false;
+  if (!product.availableSizes.includes(size)) return false;
+  return getPriceForSize(product, size) !== null;
 }
 
+/** Sorted list of sizes this product may be sold in. */
 export function getAvailableSizes(product) {
-  if (!product) return [];
-  if (Number.isFinite(product.flatPrice)) return [];
-  if (!Array.isArray(product.availableSizes)) return [];
+  if (!product || !Array.isArray(product.availableSizes)) return [];
   return sortSizes(product.availableSizes);
 }
 
+/** Min price across all available sizes. Null if none. */
 export function getMinPrice(product) {
-  if (product && Number.isFinite(product.flatPrice)) return product.flatPrice;
   const values = getAvailableSizes(product)
-    .map((size) => getPriceForSize(product, size))
-    .filter((value) => value !== null);
+    .map((s) => getPriceForSize(product, s))
+    .filter((n) => n !== null);
   return values.length ? Math.min(...values) : null;
 }
 
+/** Max price across all available sizes. Null if none. */
 export function getMaxPrice(product) {
-  if (product && Number.isFinite(product.flatPrice)) return product.flatPrice;
   const values = getAvailableSizes(product)
-    .map((size) => getPriceForSize(product, size))
-    .filter((value) => value !== null);
+    .map((s) => getPriceForSize(product, s))
+    .filter((n) => n !== null);
   return values.length ? Math.max(...values) : null;
 }
 
-/* ------------------------------------------------------------- catalogue */
+/**
+ * Short label for a product card.
+ *   single price   -> "R155"
+ *   multiple sizes -> "From R325"
+ *   no pricing     -> null
+ */
+export function priceLabel(product) {
+  const min = getMinPrice(product);
+  if (min === null) return null;
+  const max = getMaxPrice(product);
+  if (max === null || max === min) return formatAmount(min);
+  return `From ${formatAmount(min)}`;
+}
+
+/** "Price varies by size" when the product spans a range. */
+export function priceNote(product) {
+  const min = getMinPrice(product);
+  const max = getMaxPrice(product);
+  if (min === null) return null;
+  if (max !== null && max !== min) return 'Price varies by size';
+  return null;
+}
+
+/** Full accessible description for a price element. */
+export function priceAriaLabel(product) {
+  const min = getMinPrice(product);
+  const max = getMaxPrice(product);
+  if (min === null) return 'Price on request';
+  if (max === null || max === min) return `Price ${formatAmount(min)}`;
+  return `From ${formatAmount(min)} to ${formatAmount(max)}. Price varies by size.`;
+}
+
+/* -------------------------------------------------------- status helpers */
+
+/** The catalogue status of an item. Defaults to 'confirmed' if unset. */
+export function getItemStatus(item) {
+  return (item && item.status) || STATUS.CONFIRMED;
+}
+
+/** Human-readable status label for UI badges. */
+export function getStatusLabel(item) {
+  switch (getItemStatus(item)) {
+    case STATUS.UNCERTAIN:
+      return 'Availability to be confirmed';
+    case STATUS.MISSING_PRICE:
+      return 'Price unavailable';
+    default:
+      return null;
+  }
+}
+
+/**
+ * True only when the item is confirmed AND has pricing.
+ * Only purchasable items may be added to an order list.
+ */
+export function isPurchasable(item) {
+  if (!item) return false;
+  if (getItemStatus(item) !== STATUS.CONFIRMED) return false;
+  return getMinPrice(item) !== null;
+}
+
+/* -------------------------------------------------------------- lookups */
 
 export function getSchools() {
   return schools;
 }
 
 export function getSchool(schoolId) {
-  return schools.find((school) => school.id === schoolId) || null;
+  return schools.find((s) => s.id === schoolId) || null;
 }
 
-export function getAllItems() {
+/** Every product across every school, tagged with its school. */
+export function getAllProducts() {
   return schools.flatMap((school) =>
-    [...(school.bundles || []), ...(school.products || [])].map((item) => ({
-      ...item,
+    school.products.map((product) => ({
+      ...product,
       schoolId: school.id,
       schoolName: school.name,
+      kind: 'product',
     }))
   );
 }
 
+/** Every bundle across every school, tagged with its school. */
+export function getAllBundles() {
+  return schools.flatMap((school) =>
+    (school.bundles || []).map((bundle) => ({
+      ...bundle,
+      schoolId: school.id,
+      schoolName: school.name,
+      kind: 'bundle',
+    }))
+  );
+}
+
+/** Products + bundles, flattened. */
+export function getAllItems() {
+  return [...getAllProducts(), ...getAllBundles()];
+}
+
+/** Find any item by school + id, product or bundle. */
 export function getItem(schoolId, itemId) {
   const school = getSchool(schoolId);
   if (!school) return null;
-  return [...(school.bundles || []), ...(school.products || [])].find(
-    (item) => item.id === itemId
-  ) || null;
+
+  const product = school.products.find((p) => p.id === itemId);
+  if (product) {
+    return { ...product, schoolId, schoolName: school.name, kind: 'product' };
+  }
+
+  const bundle = (school.bundles || []).find((b) => b.id === itemId);
+  if (bundle) {
+    return { ...bundle, schoolId, schoolName: school.name, kind: 'bundle' };
+  }
+
+  return null;
 }
 
-/* -------------------------------------------------------------- status */
-
-export function getItemStatus(item) {
-  return item?.status || STATUS.MISSING_PRICE;
+/** Kept for backwards compatibility. */
+export function getProduct(schoolId, productId) {
+  return getItem(schoolId, productId);
 }
 
-export function getStatusLabel(item) {
-  const status = getItemStatus(item);
-  if (status === STATUS.UNCERTAIN) return 'Availability to be confirmed';
-  if (status === STATUS.MISSING_PRICE) return 'Price unavailable';
-  return '';
+export function getServices() {
+  return services;
 }
 
-export function isPurchasable(item) {
-  return getItemStatus(item) === STATUS.CONFIRMED &&
-    (Number.isFinite(item?.flatPrice) || getMinPrice(item) !== null);
+export function getAlterations() {
+  return alterations;
 }
 
-/* --------------------------------------------------------------- labels */
-
-export function priceLabel(item) {
-  if (getItemStatus(item) !== STATUS.CONFIRMED) return null;
-
-  const min = getMinPrice(item);
-  const max = getMaxPrice(item);
-  if (min === null) return null;
-
-  if (min === max) return formatAmount(min);
-  return `From ${formatAmount(min)}`;
+export function getPricingNote(key) {
+  return pricingNotes[key] || null;
 }
 
-export function priceNote(item) {
-  if (getItemStatus(item) !== STATUS.CONFIRMED) return null;
-
-  const min = getMinPrice(item);
-  const max = getMaxPrice(item);
-  if (min === null || min === max) return null;
-
-  return `up to ${formatAmount(max)} depending on size`;
+export function getCatalogueVersion() {
+  return CATALOGUE_VERSION;
 }
 
-export function priceAriaLabel(item) {
-  const label = priceLabel(item);
-  const note = priceNote(item);
-  return [label, note].filter(Boolean).join(' ');
-}
+/* ------------------------------------------------------------------ misc */
 
-export function enquiryHref(schoolId, itemId = '') {
+/** Build a deep link to the contact page with a note about this item. */
+export function enquiryHref(schoolId, itemId) {
   const params = new URLSearchParams();
   if (schoolId) params.set('school', schoolId);
   if (itemId) params.set('item', itemId);
-  const query = params.toString();
-  return `/contact#enquiry${query ? `?${query}` : ''}`;
+  const qs = params.toString();
+  return qs ? `/contact?${qs}#enquiry` : '/contact#enquiry';
 }
-
-/* ------------------------------------------------------------- exports */
-
-export {
-  CURRENCY,
-  CATALOGUE_VERSION,
-  STATUS,
-  SIZE_ORDER,
-  SIZE_LABEL,
-  schools,
-  services,
-  alterations,
-  pricingNotes,
-};
-
-export default {
-  CURRENCY,
-  CATALOGUE_VERSION,
-  STATUS,
-  SIZE_ORDER,
-  SIZE_LABEL,
-  schools,
-  services,
-  alterations,
-  pricingNotes,
-  getSchools,
-  getSchool,
-  getAllItems,
-};
