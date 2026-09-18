@@ -50,7 +50,8 @@ export const products = {
  */
 export const partners = [
   { id: 'crags', name: 'Crags Primary School', logo: '/images/crags.png' },
-  { id: 'harkerville', name: 'Harkerville School', logo: '/images/harkerville.jpg' },
+  { id: 'kranshoek', name: 'Kranshoek Primary School', logo: null },
+  { id: 'harkerville', name: 'Harkerville Ek Primary School', logo: '/images/harkerville.jpg' },
   { id: 'pletts', name: 'Plettenberg Bay Secondary School', logo: '/images/pletts.jpg' },
   { id: 'pirates', name: 'Pirates Soccer Club', logo: '/images/pirates.jpg' },
   { id: 'centrallaundry', name: 'Central Laundry', logo: '/images/centrallaundry.jpeg' },
