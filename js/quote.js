@@ -8,6 +8,8 @@
 
 const FORM_ENDPOINT = '/';
 
+import { clear as clearOrder } from './cart.js';
+
 /* --------------------------------------------------------------- helpers */
 
 function setText(node, value) {
@@ -24,6 +26,17 @@ function showFieldError(field, message) {
 
 function clearFieldError(field) {
   showFieldError(field, '');
+}
+
+function createOrderReference() {
+  const date = new Date();
+  const stamp = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0'),
+  ].join('');
+  const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `SD-${stamp}-${suffix}`;
 }
 
 /** Native constraint validation first, then our own messages on top. */
@@ -100,6 +113,9 @@ function enhanceForm(form) {
     if (!window.fetch || !window.FormData) return; // let the browser POST normally
 
     event.preventDefault();
+    const reference = createOrderReference();
+    const referenceField = form.querySelector('[name="order-reference"]');
+    if (referenceField) referenceField.value = reference;
     setStatus('Sending your enquiry…', 'pending');
     if (submitButton) submitButton.disabled = true;
 
@@ -114,13 +130,13 @@ function enhanceForm(form) {
 
       if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 
-      form.reset();
-      form.querySelectorAll('.field--invalid').forEach(clearFieldError);
-      setStatus(
-        'Thank you — your enquiry has been sent. We will be in touch to confirm the total.',
-        'success'
-      );
-      if (status) status.focus?.();
+      try {
+        window.sessionStorage.setItem('shalom.order.reference', reference);
+      } catch (storageError) {
+        // The confirmation page can still load if session storage is unavailable.
+      }
+      clearOrder();
+      window.location.assign('/thank-you.html');
     } catch (error) {
       setStatus(
         'Sorry, your enquiry could not be sent. Please try again, or contact us directly.',

@@ -79,6 +79,26 @@ function initFooterCredit() {
   legal.appendChild(credit);
 }
 
+function initThankYouReference() {
+  const node = document.querySelector('[data-order-reference]');
+  if (!node) return;
+
+  let reference = '';
+  try {
+    reference = window.sessionStorage.getItem('shalom.order.reference') || '';
+  } catch (error) {
+    reference = '';
+  }
+
+  const container = node.closest('[data-reference-container]');
+  if (!reference) {
+    if (container) container.hidden = true;
+    return;
+  }
+
+  node.textContent = reference;
+}
+
 function init() {
   initNavigation();
   initHeaderScroll();
@@ -92,6 +112,7 @@ function init() {
   initAssistantLauncher();
   initYear();
   initFooterCredit();
+  initThankYouReference();
   observeReveals();
 
   document.addEventListener('catalogue:updated', observeReveals);

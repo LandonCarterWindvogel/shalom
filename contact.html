@@ -100,6 +100,7 @@
             novalidate
           >
             <input type="hidden" name="form-name" value="enquiry">
+            <input type="hidden" name="order-reference" value="">
             <p class="honeypot" aria-hidden="true">
               <label for="bot-field">Leave this field empty</label>
               <input id="bot-field" name="bot-field" type="text" tabindex="-1" autocomplete="off">
@@ -124,6 +125,30 @@
                   <input class="field__input" id="q-email" name="email" type="email"
                          autocomplete="email" required
                          data-required-message="Please enter your email address so we can reply.">
+                  <p class="field__error" data-error role="alert"></p>
+                </div>
+              </div>
+
+              <div class="form__row form__row--2">
+                <div class="field">
+                  <label class="field__label" for="q-contact-preference">Preferred reply method</label>
+                  <select class="field__input" id="q-contact-preference" name="contact-preference">
+                    <option value="">No preference</option>
+                    <option value="email">Email</option>
+                    <option value="phone">Phone call</option>
+                    <option value="whatsapp">WhatsApp</option>
+                  </select>
+                  <p class="field__error" data-error role="alert"></p>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="q-fulfilment">Collection or delivery</label>
+                  <select class="field__input" id="q-fulfilment" name="fulfilment">
+                    <option value="">To be confirmed</option>
+                    <option value="collection">Collection</option>
+                    <option value="local-delivery">Local delivery</option>
+                    <option value="delivery-quote">Delivery quote required</option>
+                  </select>
                   <p class="field__error" data-error role="alert"></p>
                 </div>
               </div>
@@ -179,10 +204,27 @@
           </p>
 
           <div class="callout">
+            <h3>Contact and payment details</h3>
+            <p><strong>FOR ALL YOUR SEWING NEEDS!</strong></p>
+            <p>
+              WhatsApp or call <a href="tel:+27727077684">072-707-7684</a>.<br>
+              6894 Essenhout Street, New Horizon, Plettenberg Bay.
+            </p>
+            <p><strong>A 50% deposit when placing an order.</strong></p>
+            <p>
+              First National Bank<br>
+              Account name: Shalom Designs<br>
+              Account number: 625 159 717 62<br>
+              Branch code: 210514<br>
+              Reference: Name
+            </p>
+          </div>
+
+          <div class="callout">
             <h3>No payment on this site</h3>
             <p>
-              Nothing is charged here. You send an enquiry and we reply with
-              the confirmed total.
+              Nothing is charged here. Please wait for your quote and order
+              reference before paying the 50% deposit.
             </p>
           </div>
 

@@ -37,6 +37,23 @@
 export const CURRENCY = Object.freeze({ code: 'ZAR', symbol: 'R' });
 export const CATALOGUE_VERSION = '2026';
 
+export const VENDOR_INFO = Object.freeze({
+  name: 'Shalom Designs',
+  tagline: 'FOR ALL YOUR SEWING NEEDS!',
+  contact: Object.freeze({
+    callWhatsapp: '072-707-7684',
+    address: '6894 Essenhout Street, New Horizon, Plettenberg Bay',
+  }),
+  bankDetails: Object.freeze({
+    bank: 'First National Bank',
+    accountName: 'Shalom Designs',
+    accountNumber: '625 159 717 62',
+    branchCode: '210514',
+    reference: 'Name',
+  }),
+  terms: 'A 50% DEPOSIT WHEN PLACING AN ORDER',
+});
+
 /** All valid catalogue statuses. */
 export const STATUS = Object.freeze({
   CONFIRMED: 'confirmed',
@@ -46,7 +63,9 @@ export const STATUS = Object.freeze({
 
 /** Canonical order for size keys, smallest to largest. */
 export const SIZE_ORDER = Object.freeze([
-  '3-4', '5-6', '7-8', '9-10', '11-12', '13-14', '15-16', 'adult',
+  '3-4', '5-6', '7-8', '9-10', '11-12', '13-14',
+  'small', 'medium', 'large', 'extra-large', '2x-large', '3x-large',
+  '15-16', 'adult', 'one-size',
 ]);
 
 export const SIZE_LABEL = Object.freeze({
@@ -56,8 +75,15 @@ export const SIZE_LABEL = Object.freeze({
   '9-10': '9–10 years',
   '11-12': '11–12 years',
   '13-14': '13–14 years',
+  small: 'Small',
+  medium: 'Medium',
+  large: 'Large',
+  'extra-large': 'Extra Large',
+  '2x-large': '2X Large',
+  '3x-large': '3X Large',
   '15-16': '15–16 years',
   adult: 'Adult',
+  'one-size': 'One size',
 });
 
 /**
@@ -73,6 +99,25 @@ export const POSSIBLY_OFFERED_CATEGORIES = Object.freeze([
   'Jerseys',
   'Accessories',
 ]);
+
+const CHILD_SIZES = ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14'];
+const ADULT_SIZES = ['small', 'medium', 'large', 'extra-large', '2x-large', '3x-large'];
+const SENIOR_SIZES = ['11-12', '13-14', ...ADULT_SIZES];
+
+function confirmedItem(id, name, pricing, availableSizes, category = 'uniform') {
+  return {
+    id,
+    name,
+    category,
+    status: STATUS.CONFIRMED,
+    pricing,
+    availableSizes,
+  };
+}
+
+function fixedItem(id, name, price) {
+  return confirmedItem(id, name, { 'one-size': price }, ['one-size'], 'service');
+}
 
 /* ------------------------------------------------------------- schools */
 
@@ -92,8 +137,10 @@ export const schools = [
         pricing: {
           '3-4': 325, '5-6': 330, '7-8': 335,
           '9-10': 340, '11-12': 345, '13-14': 350,
+          small: 355, medium: 360, large: 365,
+          'extra-large': 370, '2x-large': 375, '3x-large': 380,
         },
-        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14'],
+        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14', 'small', 'medium', 'large', 'extra-large', '2x-large', '3x-large'],
         unavailableSizes: ['15-16', 'adult'],
       },
       {
@@ -104,8 +151,10 @@ export const schools = [
         pricing: {
           '3-4': 275, '5-6': 285, '7-8': 295,
           '9-10': 305, '11-12': 315, '13-14': 325,
+          small: 335, medium: 345, large: 355,
+          'extra-large': 365, '2x-large': 375, '3x-large': 385,
         },
-        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14'],
+        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14', 'small', 'medium', 'large', 'extra-large', '2x-large', '3x-large'],
         unavailableSizes: ['15-16', 'adult'],
       },
       {
@@ -116,8 +165,10 @@ export const schools = [
         pricing: {
           '3-4': 285, '5-6': 295, '7-8': 305,
           '9-10': 315, '11-12': 325, '13-14': 335,
+          small: 345, medium: 345, large: 365,
+          'extra-large': 375, '2x-large': 385, '3x-large': 395,
         },
-        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14'],
+        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14', 'small', 'medium', 'large', 'extra-large', '2x-large', '3x-large'],
         unavailableSizes: ['15-16', 'adult'],
       },
       {
@@ -128,32 +179,36 @@ export const schools = [
         pricing: {
           '3-4': 350, '5-6': 355, '7-8': 360,
           '9-10': 365, '11-12': 370, '13-14': 375,
+          small: 380, medium: 385, large: 390,
+          'extra-large': 395, '2x-large': 400, '3x-large': 405,
         },
-        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14'],
+        availableSizes: ['3-4', '5-6', '7-8', '9-10', '11-12', '13-14', 'small', 'medium', 'large', 'extra-large', '2x-large', '3x-large'],
         unavailableSizes: ['15-16', 'adult'],
       },
 
-      /* ---- prior catalogue entries, retained as UNCERTAIN ---- */
       {
         id: 'bahia-formosa-loose-badge',
         name: 'Loose Badge',
         category: 'accessory',
-        status: STATUS.UNCERTAIN,
-        pricingNote: 'Availability to be confirmed',
+        status: STATUS.CONFIRMED,
+        pricing: { 'one-size': 80 },
+        availableSizes: ['one-size'],
       },
       {
         id: 'bahia-formosa-winter-beanie',
         name: 'Winter Beanie',
         category: 'accessory',
-        status: STATUS.UNCERTAIN,
-        pricingNote: 'Availability to be confirmed',
+        status: STATUS.CONFIRMED,
+        pricing: { 'one-size': 80 },
+        availableSizes: ['one-size'],
       },
       {
         id: 'bahia-formosa-name-on-item',
         name: 'Name on Item',
         category: 'service',
-        status: STATUS.UNCERTAIN,
-        pricingNote: 'Availability to be confirmed',
+        status: STATUS.CONFIRMED,
+        pricing: { 'one-size': 50 },
+        availableSizes: ['one-size'],
       },
     ],
 
@@ -256,35 +311,107 @@ export const schools = [
     ],
 
     bundles: [],
-  },,
+  },
 
   {
     id: 'plettenberg-bay-secondary',
     name: 'Plettenberg Bay Secondary School',
-    summary: 'School uniform items supplied by Shalom Designs. Pricing and item details will be added when verified.',
-    products: [], bundles: [],
+    summary: 'Golf T-shirts, tracksuits and rainsuits with verified pricing for sizes 11–12 through 3X Large.',
+    products: [
+      confirmedItem('plettenberg-bay-secondary-golf-tshirt', 'Golf T-Shirt', {
+        '11-12': 170, '13-14': 175, small: 180, medium: 185,
+        large: 190, 'extra-large': 195,
+      }, SENIOR_SIZES, 'sportswear'),
+      confirmedItem('plettenberg-bay-secondary-tracksuit-top', 'Tracksuit — Top Only', {
+        '11-12': 320, '13-14': 330, small: 340, medium: 350,
+        large: 360, 'extra-large': 370,
+      }, SENIOR_SIZES, 'tracksuit'),
+      confirmedItem('plettenberg-bay-secondary-tracksuit-full', 'Tracksuit — Full Suit', {
+        '11-12': 420, '13-14': 430, small: 440, medium: 450,
+        large: 460, 'extra-large': 470,
+      }, SENIOR_SIZES, 'tracksuit'),
+      confirmedItem('plettenberg-bay-secondary-rainsuit-coat', 'Rainsuit — Coat Only', {
+        '11-12': 370, '13-14': 380, small: 390, medium: 400,
+        large: 410, 'extra-large': 420,
+      }, SENIOR_SIZES, 'rainwear'),
+      confirmedItem('plettenberg-bay-secondary-rainsuit-full', 'Rainsuit — Full Suit', {
+        '11-12': 470, '13-14': 480, small: 490, medium: 500,
+        large: 510, 'extra-large': 520,
+      }, SENIOR_SIZES, 'rainwear'),
+      fixedItem('plettenberg-bay-secondary-loose-badge', 'Loose Badge', 80),
+      fixedItem('plettenberg-bay-secondary-name-on-item', 'Name on Item', 50),
+      fixedItem('plettenberg-bay-secondary-badge-on-item', 'Badge on Item', 90),
+    ],
+    bundles: [],
   },
   {
     id: 'kranshoek-primary',
     name: 'Kranshoek Primary School',
-    summary: 'School uniform items supplied by Shalom Designs. Pricing and item details will be added when verified.',
-    products: [], bundles: [],
+    summary: 'Tracksuits and raincoats with verified pricing for sizes 3–4 through 13–14.',
+    products: [
+      confirmedItem('kranshoek-primary-tracksuit', 'Tracksuit', {
+        '3-4': 360, '5-6': 370, '7-8': 380,
+        '9-10': 390, '11-12': 400, '13-14': 410,
+      }, CHILD_SIZES, 'tracksuit'),
+      confirmedItem('kranshoek-primary-raincoat', 'Raincoat', {
+        '3-4': 320, '5-6': 330, '7-8': 340,
+        '9-10': 350, '11-12': 360, '13-14': 370,
+      }, CHILD_SIZES, 'rainwear'),
+      fixedItem('kranshoek-primary-loose-badge', 'Loose Badge', 80),
+      fixedItem('kranshoek-primary-name-on-item', 'Name on Item', 50),
+      fixedItem('kranshoek-primary-badge-on-item', 'Badge on Item', 90),
+    ],
+    bundles: [],
   },
   {
     id: 'harkerville-ek',
     name: 'Harkerville Ek Primary School',
-    summary: 'School uniform items supplied by Shalom Designs. Pricing and item details will be added when verified.',
-    products: [], bundles: [],
-  },
-  {
-    id: 'crags-primary',
-    name: 'Crags Primary School',
-    summary: 'School uniform items supplied by Shalom Designs. Pricing and item details will be added when verified.',
-    products: [], bundles: [],
+    summary: 'Tracksuits and raincoats with verified pricing for sizes 3–4 through 13–14.',
+    products: [
+      confirmedItem('harkerville-ek-tracksuit', 'Tracksuit', {
+        '3-4': 360, '5-6': 370, '7-8': 380,
+        '9-10': 390, '11-12': 400, '13-14': 410,
+      }, CHILD_SIZES, 'tracksuit'),
+      confirmedItem('harkerville-ek-raincoat', 'Raincoat', {
+        '3-4': 330, '5-6': 340, '7-8': 350,
+        '9-10': 360, '11-12': 370, '13-14': 380,
+      }, CHILD_SIZES, 'rainwear'),
+      fixedItem('harkerville-ek-loose-badge', 'Loose Badge', 80),
+      fixedItem('harkerville-ek-name-on-item', 'Name on Item', 50),
+      fixedItem('harkerville-ek-badge-on-item', 'Badge on Item', 90),
+    ],
+    bundles: [],
   },
   {
     id: 'kwanokuthula-primary',
     name: 'Kwanokuthula Primary School',
+    summary: 'Golf T-shirts, tracksuits and rainsuits with verified pricing for sizes 3–4 through 13–14.',
+    products: [
+      confirmedItem('kwanokuthula-primary-golf-tshirt', 'Golf T-Shirt', {
+        '3-4': 210, '5-6': 220, '7-8': 230,
+        '9-10': 240, '11-12': 250, '13-14': 265,
+      }, CHILD_SIZES, 'sportswear'),
+      confirmedItem('kwanokuthula-primary-tracksuit', 'Tracksuit', {
+        '3-4': 500, '5-6': 510, '7-8': 520,
+        '9-10': 530, '11-12': 540, '13-14': 550,
+      }, CHILD_SIZES, 'tracksuit'),
+      confirmedItem('kwanokuthula-primary-rainsuit-coat', 'Rainsuit — Coat Only', {
+        '3-4': 410, '5-6': 420, '7-8': 430,
+        '9-10': 440, '11-12': 450, '13-14': 460,
+      }, CHILD_SIZES, 'rainwear'),
+      confirmedItem('kwanokuthula-primary-rainsuit-full', 'Rainsuit — Full Suit', {
+        '3-4': 510, '5-6': 520, '7-8': 530,
+        '9-10': 540, '11-12': 550, '13-14': 560,
+      }, CHILD_SIZES, 'rainwear'),
+      fixedItem('kwanokuthula-primary-loose-badge', 'Loose Badge', 80),
+      fixedItem('kwanokuthula-primary-name-on-item', 'Name on Item', 50),
+      fixedItem('kwanokuthula-primary-badge-on-item', 'Badge on Item', 90),
+    ],
+    bundles: [],
+  },
+  {
+    id: 'crags-primary',
+    name: 'Crags Primary School',
     summary: 'School uniform items supplied by Shalom Designs. Pricing and item details will be added when verified.',
     products: [], bundles: [],
   },
@@ -389,6 +516,7 @@ export const pricingNotes = Object.freeze({
 export default {
   CURRENCY,
   CATALOGUE_VERSION,
+  VENDOR_INFO,
   STATUS,
   SIZE_ORDER,
   SIZE_LABEL,

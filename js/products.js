@@ -164,6 +164,17 @@ export function renderSchoolProducts(mount, schoolId) {
 
   const everything = [...(school.bundles || []), ...school.products];
 
+  if (!everything.length) {
+    mount.append(
+      el(
+        'p',
+        'empty-state',
+        'Pricing and item details will be added when verified. Contact us if you need help with this school.'
+      )
+    );
+    return;
+  }
+
   everything.forEach((item, index) => {
     const card = itemCard(item, school);
     card.style.setProperty('--reveal-delay', `${Math.min(index, 6) * 60}ms`);
