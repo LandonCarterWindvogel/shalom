@@ -800,22 +800,11 @@ select.field__input {
 /* -------------------------------------------------- partner carousel */
 
 .partner-carousel {
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 6%,
-    #000 94%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 6%,
-    #000 94%,
-    transparent 100%
-  );
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .partner-carousel__track {
@@ -825,21 +814,7 @@ select.field__input {
   width: max-content;
   list-style: none;
   margin: 0;
-  padding: 0;
-  animation: partner-scroll 42s linear infinite;
-  will-change: transform;
-}
-
-@media (hover: hover) {
-  .partner-carousel:hover .partner-carousel__track,
-  .partner-carousel:focus-within .partner-carousel__track {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes partner-scroll {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+  padding: 0 var(--space-xs);
 }
 
 .partner-carousel__item {
@@ -854,6 +829,19 @@ select.field__input {
   overflow: visible;
 }
 
+.partner-carousel__logo {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+
 .partner-carousel__text {
   display: block;
   max-width: 11ch;
@@ -866,29 +854,13 @@ select.field__input {
 }
 
 @media (hover: hover) {
-  .partner-carousel__item:hover .partner-carousel__text {
-    color: var(--blue);
-    opacity: 1;
-  }
-}
-
-.partner-carousel__logo {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-
-  filter: grayscale(1);
-  opacity: 0.72;
-  transition: filter var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
-
-@media (hover: hover) {
   .partner-carousel__item:hover .partner-carousel__logo {
     filter: grayscale(0);
+    opacity: 1;
+  }
+
+  .partner-carousel__item:hover .partner-carousel__text {
+    color: var(--blue);
     opacity: 1;
   }
 }
@@ -906,21 +878,6 @@ select.field__input {
 @media (min-width: 80rem) {
   .partner-carousel__track { gap: 5rem; }
   .partner-carousel__item { width: 10rem; height: 6.5rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .partner-carousel {
-    mask-image: none;
-    -webkit-mask-image: none;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .partner-carousel__track {
-    animation: none;
-    padding-inline: var(--space-m);
-  }
 }
 
 /* ------------------------------------------------------- order dialog */
