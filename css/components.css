@@ -1054,8 +1054,8 @@ select.field__input {
   right: var(--space-l);
   bottom: var(--space-l);
   z-index: 130;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: clamp(4.25rem, 8vw, 5.25rem);
+  height: clamp(4.25rem, 8vw, 5.25rem);
   border-radius: 50%;
   padding: 0;
   overflow: hidden;
@@ -1068,6 +1068,7 @@ select.field__input {
 }
 
 .assistant-launcher img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1083,22 +1084,27 @@ select.field__input {
 .assistant-note {
   position: fixed;
   right: var(--space-l);
-  bottom: calc(var(--space-l) + 4rem);
+  bottom: calc(var(--space-l) + clamp(4.25rem, 8vw, 5.25rem));
   z-index: 130;
-  max-width: 15rem;
+  max-width: min(19rem, calc(100vw - (2 * var(--space-l))));
   margin: 0;
   padding: var(--space-s) var(--space-m);
   background: var(--blue-deep);
   color: var(--ivory);
   font-size: 0.82rem;
   line-height: var(--leading-normal);
+  border: 1px solid rgb(255 255 255 / 12%);
   border-radius: var(--radius-s);
   box-shadow: var(--shadow-m);
 }
 
 @media (max-width: 30rem) {
-  .assistant-launcher { width: 3rem; height: 3rem; }
-  .assistant-note { max-width: calc(100vw - (2 * var(--space-l))); }
+  .assistant-launcher { right: var(--space-m); bottom: var(--space-m); }
+  .assistant-note {
+    right: var(--space-m);
+    bottom: calc(var(--space-m) + 4.25rem);
+    max-width: calc(100vw - (2 * var(--space-m)));
+  }
 }
 
 /* ---------------------------------------------------- product photography */
