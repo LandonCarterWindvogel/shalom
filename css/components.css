@@ -800,11 +800,22 @@ select.field__input {
 /* -------------------------------------------------- partner carousel */
 
 .partner-carousel {
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
   width: 100%;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 6%,
+    #000 94%,
+    transparent 100%
+  );
 }
 
 .partner-carousel__track {
@@ -814,7 +825,21 @@ select.field__input {
   width: max-content;
   list-style: none;
   margin: 0;
-  padding: 0 var(--space-xs);
+  padding: 0;
+  animation: partner-scroll 42s linear infinite;
+  will-change: transform;
+}
+
+@keyframes partner-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (hover: hover) {
+  .partner-carousel:hover .partner-carousel__track,
+  .partner-carousel:focus-within .partner-carousel__track {
+    animation-play-state: paused;
+  }
 }
 
 .partner-carousel__item {
@@ -878,6 +903,21 @@ select.field__input {
 @media (min-width: 80rem) {
   .partner-carousel__track { gap: 5rem; }
   .partner-carousel__item { width: 10rem; height: 6.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-carousel {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .partner-carousel__track {
+    animation: none;
+    padding-inline: var(--space-m);
+  }
 }
 
 /* ------------------------------------------------------- order dialog */
