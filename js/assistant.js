@@ -6,7 +6,6 @@ export function initAssistantLauncher() {
   if (document.querySelector('[data-assistant-launcher]')) return;
   if (!assistant || !assistant.image) return;
 
-
   const note = document.createElement('p');
   note.className = 'assistant-note';
   note.id = 'assistant-launcher-note';
@@ -32,6 +31,10 @@ export function initAssistantLauncher() {
   img.decoding = 'async';
   button.append(img);
 
+  const status = document.createElement('span');
+  status.className = 'assistant-launcher__status';
+  status.setAttribute('aria-hidden', 'true');
+  button.append(status);
 
   button.addEventListener('click', () => {
     note.hidden = !note.hidden;
