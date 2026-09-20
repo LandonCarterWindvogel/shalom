@@ -37,7 +37,7 @@ export function initFilters() {
     }
 
     // Newly injected cards need observing, and focus should move somewhere useful.
-    document.dispatchEvent(new CustomEvent('catalogue:updated', { detail: { value } }));
+    document.dispatchEvent(new CustomEvent('catalogue:updated', { detail: { value: safeValue } }));
   }
 
   group.addEventListener('click', (event) => {
