@@ -70,6 +70,15 @@ def main() -> int:
         if rewritten != original:
             path.write_text(rewritten, encoding="utf-8")
 
+    # The GitHub Pages site is a public preview of the production domain.
+    # Keep the preview out of search indexes while the canonical URLs continue
+    # to point at shalomdesigns.co.za.
+    robots = root / "robots.txt"
+    robots.write_text(
+        "User-agent: *\nDisallow: /\n",
+        encoding="utf-8",
+    )
+
     print(f"Prepared GitHub Pages site: {root}")
     return 0
 
