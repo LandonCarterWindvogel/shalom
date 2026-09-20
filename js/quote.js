@@ -35,8 +35,23 @@ function createOrderReference() {
     String(date.getMonth() + 1).padStart(2, '0'),
     String(date.getDate()).padStart(2, '0'),
   ].join('');
-  const suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
+
+  let suffix = '';
+  try {
+    const bytes = new Uint8Array(3);
+    window.crypto?.getRandomValues(bytes);
+    suffix = Array.from(bytes, (byte) =>
+      byte.toString(16).padStart(2, '0')
+    ).join('').slice(0, 4).toUpperCase();
+  } catch (error) {
+    suffix = Math.random().toString(36).slice(2, 6).toUpperCase();
+  }
+
   return `SD-${stamp}-${suffix}`;
+}
+
+function isGitHubPagesPreview() {
+  return /.github\.io$/i.test(window.location.hostname);
 }
 
 /** Native constraint validation first, then our own messages on top. */
@@ -107,6 +122,15 @@ function enhanceForm(form) {
       event.preventDefault();
       setStatus('Please correct the highlighted fields and try again.', 'error');
       invalid[0].focus();
+      return;
+    }
+
+    if (isGitHubPagesPreview()) {
+      event.preventDefault();
+      setStatus(
+        'This GitHub Pages preview does not process enquiries. Please use the production site at shalomdesigns.co.za/contact to send your enquiry.',
+        'error'
+      );
       return;
     }
 
