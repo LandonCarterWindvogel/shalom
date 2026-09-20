@@ -143,6 +143,8 @@ Production:
 
 https://shalomdesigns.co.za/
 
+The GitHub Pages site is a static preview. Enquiry forms are processed only by the production Netlify deployment, so use the production contact page when you need to send an enquiry.
+
 ## A note to future me
 
 If I am about to duplicate a price in three HTML files, stop.
