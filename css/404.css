@@ -1,0 +1,39 @@
+/* -------------------------------------------------------------- 404 page */
+
+.not-found-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--blue-deep);
+  color: var(--ivory);
+}
+
+.not-found-page__main {
+  width: min(38rem, calc(100% - 3rem));
+  padding-block: var(--space-4xl);
+}
+
+.not-found-page__code {
+  margin: 0;
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.not-found-page__title {
+  margin-block: var(--space-xs) var(--space-s);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+}
+
+.not-found-page__lead {
+  max-width: 50ch;
+  margin-bottom: var(--space-m);
+  color: rgba(247, 244, 236, 0.78);
+}
+
+.not-found-page__link {
+  color: var(--gold-light);
+  font-weight: 700;
+}

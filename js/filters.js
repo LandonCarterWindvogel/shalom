@@ -21,23 +21,33 @@ export function initFilters() {
 
   if (!group || !mount) return;
 
+  const validValues = new Set(
+    [...group.querySelectorAll('[data-filter-value]')].map(
+      (link) => link.dataset.filterValue
+    )
+  );
+
   function currentValue() {
     return new URLSearchParams(window.location.search).get('school') || 'all';
   }
 
   function apply(value, { updateUrl = true } = {}) {
-    renderCatalogue(mount, value);
-    applyPressedState(group, value);
+    const safeValue = validValues.has(value) ? value : 'all';
+
+    renderCatalogue(mount, safeValue);
+    applyPressedState(group, safeValue);
 
     if (updateUrl) {
       const url = new URL(window.location.href);
-      if (value === 'all') url.searchParams.delete('school');
-      else url.searchParams.set('school', value);
+      if (safeValue === 'all') url.searchParams.delete('school');
+      else url.searchParams.set('school', safeValue);
       window.history.replaceState({}, '', url);
     }
 
     // Newly injected cards need observing, and focus should move somewhere useful.
-    document.dispatchEvent(new CustomEvent('catalogue:updated', { detail: { value } }));
+    document.dispatchEvent(
+      new CustomEvent('catalogue:updated', { detail: { value: safeValue } })
+    );
   }
 
   group.addEventListener('click', (event) => {

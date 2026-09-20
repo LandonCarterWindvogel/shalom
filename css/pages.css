@@ -307,6 +307,7 @@ body[data-page="school-uniforms"] [data-price-list] {
 /* ----------------------------------------------------------------- misc */
 
 .prose { max-width: 64ch; }
+.prose--spaced { margin-top: var(--space-m); }
 .prose > * + * { margin-top: var(--space-m); }
 .prose h2 { font-size: var(--step-3); margin-top: var(--space-2xl); }
 .prose h3 { font-size: var(--step-2); margin-top: var(--space-xl); }

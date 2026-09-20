@@ -316,28 +316,28 @@ export const schools = [
   {
     id: 'plettenberg-bay-secondary',
     name: 'Plettenberg Bay Secondary School',
-    summary: 'Golf T-shirts, tracksuits and rainsuits with verified pricing for sizes 11–12 through 3X Large.',
+    summary: 'Golf T-shirts, tracksuits and rainsuits with verified pricing for sizes 11–12 through Extra Large.',
     products: [
       confirmedItem('plettenberg-bay-secondary-golf-tshirt', 'Golf T-Shirt', {
         '11-12': 170, '13-14': 175, small: 180, medium: 185,
         large: 190, 'extra-large': 195,
-      }, SENIOR_SIZES, 'sportswear'),
+      }, ['11-12', '13-14', 'small', 'medium', 'large', 'extra-large'], 'sportswear'),
       confirmedItem('plettenberg-bay-secondary-tracksuit-top', 'Tracksuit — Top Only', {
         '11-12': 320, '13-14': 330, small: 340, medium: 350,
         large: 360, 'extra-large': 370,
-      }, SENIOR_SIZES, 'tracksuit'),
+      }, ['11-12', '13-14', 'small', 'medium', 'large', 'extra-large'], 'tracksuit'),
       confirmedItem('plettenberg-bay-secondary-tracksuit-full', 'Tracksuit — Full Suit', {
         '11-12': 420, '13-14': 430, small: 440, medium: 450,
         large: 460, 'extra-large': 470,
-      }, SENIOR_SIZES, 'tracksuit'),
+      }, ['11-12', '13-14', 'small', 'medium', 'large', 'extra-large'], 'tracksuit'),
       confirmedItem('plettenberg-bay-secondary-rainsuit-coat', 'Rainsuit — Coat Only', {
         '11-12': 370, '13-14': 380, small: 390, medium: 400,
         large: 410, 'extra-large': 420,
-      }, SENIOR_SIZES, 'rainwear'),
+      }, ['11-12', '13-14', 'small', 'medium', 'large', 'extra-large'], 'rainwear'),
       confirmedItem('plettenberg-bay-secondary-rainsuit-full', 'Rainsuit — Full Suit', {
         '11-12': 470, '13-14': 480, small: 490, medium: 500,
         large: 510, 'extra-large': 520,
-      }, SENIOR_SIZES, 'rainwear'),
+      }, ['11-12', '13-14', 'small', 'medium', 'large', 'extra-large'], 'rainwear'),
       fixedItem('plettenberg-bay-secondary-loose-badge', 'Loose Badge', 80),
       fixedItem('plettenberg-bay-secondary-name-on-item', 'Name on Item', 50),
       fixedItem('plettenberg-bay-secondary-badge-on-item', 'Badge on Item', 90),
